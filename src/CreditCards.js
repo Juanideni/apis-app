@@ -1,26 +1,14 @@
 
 import { useState, useEffect } from "react"
-
+import {Link} from "react-router-dom"
 function CreditCards(){
-    let [type, setType] = useState("")
-    let [owner, setOwner] = useState("")
-    let [number, setNumber] = useState("")
-    let [expiration, setExpiration] = useState("")
-    let [prueba, setPrueba] = useState("")
- 
-    let axios = require("axios")
-    
+    let [creditCards, setCreditCards] = useState([])
     useEffect(() => {
         fetch("https://fakerapi.it/api/v1/credit_cards")
           .then(result => result.json())
           .then(
               (result) => {
-                setOwner(result.data.[0].owner)
-                setType(result.data.[0].type);
-                setNumber(result.data.[0].number);
-                setExpiration(result.data.[0].expiration)
-                setPrueba(result.data)
-
+                setCreditCards(result.data)
             },   
           )
       }, [])
@@ -29,28 +17,61 @@ function CreditCards(){
     
 
     function test(){
-        console.log(prueba)
+        console.log(creditCards)
     }
     
 return(
     <>
-    <button onClick={test}></button>   
-    <h1>
-    <ul>
-        <li>
-        {"Marca de tarjeta: "+type}
-        </li>
-        <li>
-        {"Numero de tarjeta: "+number}
-        </li>
-        <li>
-        {"Fecha de vencimiento: "+expiration}
-        </li>
-        <li>
-        {"Dueño: "+owner}
-        </li>
-    </ul>
-    </h1>
+   
+    <button><Link to="/">Volver al menu principal</Link></button>
+
+    
+       {
+        creditCards.map(card => (
+            <ul>
+
+            
+        <li key="card.type">
+            <table className="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Marca de la tarjeta
+                            </th>
+                            <th>
+                                Numero
+                            </th>
+                            <th>
+                                Fecha de expiracion
+                            </th>
+                            <th>
+                                Titular de la tarjeta
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                {card.type}
+                            </td>
+                            <td>
+                                {card.number}
+                            </td>
+                            <td>
+                                {card.expiration} 
+                            </td>
+                            <td>
+                                {card.owner}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>  
+                </li> 
+                </ul>
+           ))
+        }
+   
+
     
     </>
 )

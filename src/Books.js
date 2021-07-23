@@ -1,57 +1,73 @@
 
-
 import { useState, useEffect } from "react"
-
+import {Link} from "react-router-dom"
 function Books(){
-    let [author, setAuthor] = useState("")
-    let [title, setTitle] = useState("")
-    let [genre, setGenre] = useState("")
-    let [published, setPublished] = useState("")
-    let [prueba, setPrueba] = useState("")
+    let [books, setBooks] = useState([])
+    
  
-    let axios = require("axios")
+    
     
     useEffect(() => {
         fetch("https://fakerapi.it/api/v1/books")
           .then(result => result.json())
           .then(
               (result) => {
-                setTitle(result.data.[0].title)
-                setAuthor(result.data.[0].author);
-                setGenre(result.data.[0].genre);
-                setPublished(result.data.[0].published)
-                setPrueba(result.data)
-
+                setBooks(result.data)
+                
             },   
-          )
-      }, [])
-    
-
-    
+          ) 
+    }, [])
 
     function test(){
-        console.log(prueba)
+        console.log(books)
     }
     
 return(
     <>
-    <button onClick={test}></button>   
-    <h1>
-    <ul>
-        <li>
-        {"Titulo: "+title}
-        </li>
-        <li>
-        {"Escrito por: "+author}
-        </li>
-        <li>
-        {"Genero: "+genre}
-        </li>
-        <li>
-        {"Fecha de publicacion: "+published}
-        </li>
-    </ul>
-    </h1>
+    <button><Link to="/">Volver al menu principal</Link></button>  
+    {
+        books.map(book => (
+        <ul>
+            <li key="book.title">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                Titulo
+                            </th>
+                            <th>
+                                Autor
+                            </th>
+                            <th>
+                                Genero
+                            </th>
+                            <th>
+                                Fecha de publicacion
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                {book.title}
+                            </td>
+                            <td>
+                                {book.author}
+                            </td>
+                            <td>
+                                {book.genre} 
+                            </td>
+                            <td>
+                                {book.published}
+                            </td>
+                        </tr>
+                    </tbody> 
+                </table>  
+            </li>
+        </ul>
+        ))
+    }
+    
     
     </>
 )
