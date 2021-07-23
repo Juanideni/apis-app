@@ -12,14 +12,7 @@ function CreditCards(){
             },   
           )
       }, [])
-    
-
-    
-
-    function test(){
-        console.log(creditCards)
-    }
-    
+       
 return(
     <>
    

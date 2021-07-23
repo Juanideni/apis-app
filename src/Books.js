@@ -4,9 +4,6 @@ import {Link} from "react-router-dom"
 function Books(){
     let [books, setBooks] = useState([])
     
- 
-    
-    
     useEffect(() => {
         fetch("https://fakerapi.it/api/v1/books")
           .then(result => result.json())
@@ -18,9 +15,6 @@ function Books(){
           ) 
     }, [])
 
-    function test(){
-        console.log(books)
-    }
     
 return(
     <>
